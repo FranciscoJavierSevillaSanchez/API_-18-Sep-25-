@@ -44,6 +44,20 @@ def get_alumnos():
         })
     return jsonify(lista_alumnos)
 
+#endpoint para agregar un nuevo alumno
+@app.route('/alumnos', methods=['POST'])
+def insert_alumno():
+    data = request.get_json()
+    nuevo_alumno = Alumno(
+        no_control = data['no_control'],
+        nombre = data['nombre'],
+        ap_paterno = data['ap_paterno'],
+        ap_materno = data['ap_materno'],
+        semestre = data['semestre'],
+    )
+    db.session.add(nuevo_alumno)
+    db.session.commit()
+    return jsonify ({'msg':'Alumno agregado correctamente'})
 
 if __name__ == ('__main__'):
     app.run(debug=True)
