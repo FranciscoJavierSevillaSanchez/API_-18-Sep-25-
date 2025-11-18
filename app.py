@@ -59,5 +59,19 @@ def insert_alumno():
     db.session.commit()
     return jsonify ({'msg':'Alumno agregado correctamente'})
 
+#endpoint para obtener un alumno por el no_control
+@app.route('/alumnos/<no_control>', methods=['GET'])
+def get_alumno(no_control):
+    alumno = Alumno.query.get(no_control)
+    if alumno is None:
+        return jsonify ({'msg':'Alumno no encontrado'})
+    return jsonify({
+        'no_control': alumno.no_control,
+        'nombre': alumno.nombre,
+        'ap_paterno': alumno.ap_paterno,
+        'ap_materno': alumno.ap_materno,
+        'semestre': alumno.semestre,
+    })
+
 if __name__ == ('__main__'):
     app.run(debug=True)
